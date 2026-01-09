@@ -2,20 +2,62 @@
 # Parameters for Stereolabs zed2i camera
 
 ---
+# /**:
+#     ros__parameters:
+#         general:
+#             camera_model: 'zed2i'
+#             camera_name: 'zed2i' # overwritten by launch file
+#             grab_resolution: 'HD2K' # The native camera grab resolution. 'HD2K', 'HD1080', 'HD720', 'VGA', 'AUTO'
+#             grab_frame_rate: 15 # ZED SDK internal grabbing rate
+
+#         video:
+#             brightness: 4 # [DYNAMIC] Image brightness. Range: 0-8
+#             contrast: 4 # [DYNAMIC] Image contrast. Range: 0-8
+#             hue: 0 # [DYNAMIC] Image hue. Range: 0 to 11
+
+#         depth:
+#             min_depth: 0.5 # Min: 0.01, Max: 3.0
+#             max_depth: 3.0 # Min: 0.5, Max: 20.0
+# config/zed2i.yaml
+# ZED2i parameters for clean and stable depth maps
+
 /**:
-    ros__parameters:
-        general:
-            camera_model: 'zed2i'
-            camera_name: 'zed2i' # overwritten by launch file
-            grab_resolution: 'HD1080' # The native camera grab resolution. 'HD2K', 'HD1080', 'HD720', 'VGA', 'AUTO'
-            grab_frame_rate: 15 # ZED SDK internal grabbing rate
+  ros__parameters:
 
-        video:
-            brightness: 4 # [DYNAMIC] Image brightness. Range: 0-8
-            contrast: 4 # [DYNAMIC] Image contrast. Range: 0-8
-            hue: 0 # [DYNAMIC] Image hue. Range: 0 to 11
+    general:
+        camera_model: 'zed2i'
+        camera_name: 'zed2i' # overwritten by launch file
+        grab_resolution: 'HD1080'     # Camera capture resolution
+        grab_frame_rate: 15         # Internal ZED grab rate
 
-        depth:
-            min_depth: 0.01 # Min: 0.01, Max: 3.0
-            max_depth: 15.0 # Min: 0.5, Max: 20.0
+    video:
+        brightness: 4 # [DYNAMIC] Image brightness. Range: 0-8
+        contrast: 4 # [DYNAMIC] Image contrast. Range: 0-8
+        hue: 0 # [DYNAMIC] Image hue. Range: 0 to 11
 
+    depth:
+        # Depth computation mode (string only)
+        # Options: 'NEURAL', 'ULTRA', 'QUALITY', 'PERFORMANCE', 'NONE'
+        depth_mode: 'NEURAL'         # Best stereo depth quality
+
+        # Depth range in meters
+        min_depth: 0.5
+        max_depth: 3.0
+
+        # Temporal smoothing of depth
+        depth_stabilization: 1      # 0 = off, 1 = on
+
+        # Confidence filters (0–100)
+        depth_confidence: 95        # Higher = reject more uncertain depth
+        # depth_texture_conf: 95      # Filter low-texture unreliable pixels
+
+        # OpenNI mode (should remain off for best quality)
+        openni_depth_mode: false
+
+        # Removes saturated regions (recommended)
+        remove_saturated_areas: true
+
+        # # Depth publishing options
+        # publish_depth_map: true
+        # publish_disparity: false
+        # publish_depth_confidence: false
